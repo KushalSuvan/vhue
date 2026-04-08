@@ -186,71 +186,74 @@ def get_action(
 # Single task episode
 # ---------------------------------------------------------------------------
 
-async def run_task(env: TrafficEnv, client: OpenAI, task: str) -> None:
-    rewards: List[float] = []
-    history: List[str]   = []
-    steps_taken = 0
-    score = 0.0
-    success = False
+# async def run_task(env: TrafficEnv, client: OpenAI, task: str) -> None:
+#     rewards: List[float] = []
+#     history: List[str]   = []
+#     steps_taken = 0
+#     score = 0.0
+#     success = False
 
-    log_start(task=task, env=BENCHMARK, model=MODEL_NAME)
+#     log_start(task=task, env=BENCHMARK, model=MODEL_NAME)
 
-    try:
-        result     = await env.reset(task=task)
-        obs        = result.observation
-        last_reward = 0.0
+#     try:
+#         result     = await env.reset(task=task)
+#         obs        = result.observation
+#         last_reward = 0.0
 
-        # Get the main intersection id from the first observation
-        intersection_id = (
-            obs.road_network.intersections[0].id
-            if obs.road_network.intersections
-            else "intersection_center"
-        )
+#         print(result)
 
-        for step in range(1, MAX_STEPS + 1):
-            if result.done:
-                break
 
-            # Serialise only the parts the LLM needs — trim noise
-            obs_summary = _summarise_obs(obs)
-            obs_json    = json.dumps(obs_summary, indent=2)
+    #     # Get the main intersection id from the first observation
+    #     intersection_id = (
+    #         obs.road_network.intersections[0].id
+    #         if obs.road_network.intersections
+    #         else "intersection_center"
+    #     )
 
-            action, raw, error = get_action(
-                client, obs_json, step, last_reward, history, intersection_id
-            )
+    #     for step in range(1, MAX_STEPS + 1):
+    #         if result.done:
+    #             break
 
-            result      = await env.step(action)
-            obs         = result.observation
-            reward      = result.reward or 0.0
-            done        = result.done
+    #         # Serialise only the parts the LLM needs — trim noise
+    #         obs_summary = _summarise_obs(obs)
+    #         obs_json    = json.dumps(obs_summary, indent=2)
 
-            rewards.append(reward)
-            steps_taken = step
-            last_reward = reward
+    #         action, raw, error = get_action(
+    #             client, obs_json, step, last_reward, history, intersection_id
+    #         )
 
-            # Compact action string for log line
-            action_str = json.dumps(
-                [{"i": d.intersection_id, "p": d.phase_id} for d in action.decisions]
-            ).replace(" ", "")
+    #         result      = await env.step(action)
+    #         obs         = result.observation
+    #         reward      = result.reward or 0.0
+    #         done        = result.done
 
-            log_step(step=step, action=action_str, reward=reward, done=done, error=error)
-            history.append(f"Step {step}: phase={action_str} reward={reward:+.2f}")
+    #         rewards.append(reward)
+    #         steps_taken = step
+    #         last_reward = reward
 
-            if done:
-                break
+    #         # Compact action string for log line
+    #         action_str = json.dumps(
+    #             [{"i": d.intersection_id, "p": d.phase_id} for d in action.decisions]
+    #         ).replace(" ", "")
 
-        # Normalise to [0, 1]
-        # Rewards are in [-1, 1]. Shift to [0, 2] then normalise by 2*MAX_STEPS.
-        shifted = sum(r + 1.0 for r in rewards)
-        score   = shifted / (2.0 * MAX_STEPS)
-        score   = min(max(score, 0.0), 1.0)
-        success = score >= SUCCESS_SCORE_THRESHOLD
+    #         log_step(step=step, action=action_str, reward=reward, done=done, error=error)
+    #         history.append(f"Step {step}: phase={action_str} reward={reward:+.2f}")
 
-    except Exception as exc:
-        print(f"[DEBUG] Episode error: {exc}", flush=True)
+    #         if done:
+    #             break
 
-    finally:
-        log_end(success=success, steps=steps_taken, score=score, rewards=rewards)
+    #     # Normalise to [0, 1]
+    #     # Rewards are in [-1, 1]. Shift to [0, 2] then normalise by 2*MAX_STEPS.
+    #     shifted = sum(r + 1.0 for r in rewards)
+    #     score   = shifted / (2.0 * MAX_STEPS)
+    #     score   = min(max(score, 0.0), 1.0)
+    #     success = score >= SUCCESS_SCORE_THRESHOLD
+
+    # except Exception as exc:
+    #     print(f"[DEBUG] Episode error: {exc}", flush=True)
+
+    # finally:
+    #     log_end(success=success, steps=steps_taken, score=score, rewards=rewards)
 
 
 def _summarise_obs(obs) -> dict:
@@ -286,20 +289,39 @@ def _summarise_obs(obs) -> dict:
 # Main — run all three tasks sequentially
 # ---------------------------------------------------------------------------
 
+async def run_task(env: TrafficEnv, client: OpenAI, task: str) -> None:
+    # rewards: List[float] = []
+    # history: List[str]   = []
+    # steps_taken = 0
+    # score = 0.0
+    # success = False
+
+    # log_start(task=task, env=BENCHMARK, model=MODEL_NAME)
+
+    try:
+        result     = await env.reset(task=task)
+        # obs        = result.observation
+        last_reward = 0.0
+        print("Worked atleast")
+        print(result)
+
+    except Exception as exc:
+        print(f"[DEBUG] Episode error: {exc}", flush=True)
+        pass
+    finally:
+        # log_end(success=success, steps=steps_taken, score=score, rewards=rewards)
+        pass
+
+
 async def main() -> None:
-    client = OpenAI(base_url=API_BASE_URL, api_key=API_KEY)
+    base_url = "http://0.0.0.0:8000"
+    env = TrafficEnv(base_url=base_url)
 
-    base_url = os.getenv("ENV_BASE_URL", "https://etherealwhisper-traffic-env.hf.space")
+    await run_task(env, None, 'easy')
+    # async with env:  # connect once
+    #     for task in ["easy", "medium", "hard"]:
+    #         await run_task(env, client, task)
 
-    if IMAGE_NAME:
-        env = await TrafficEnv.from_docker_image(IMAGE_NAME)
-    else:
-        env = TrafficEnv(base_url=base_url)
-
-    async with env:  # connect once
-        for task in ["easy", "medium", "hard"]:
-            await run_task(env, client, task)
-            
 
 if __name__ == "__main__":
     asyncio.run(main())
