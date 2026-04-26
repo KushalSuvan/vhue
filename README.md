@@ -1,5 +1,5 @@
 ---
-title: Mesoscopic Traffic Env
+title: VHUE- Vehicles Under Echelonment 
 emoji: 🚦
 colorFrom: indigo
 colorTo: blue
@@ -13,7 +13,7 @@ tags:
   - reinforcement-learning
   - unsloth
   - traffic-flow-theory
-short_description: Devolving microscopic priority routing to mesoscopic cell eviction for LLM training.
+short_description: Traffic Intersection control environment
 ---
 
 <div align="center">
