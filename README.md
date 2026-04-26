@@ -41,6 +41,10 @@ short_description: Traffic Intersection control environment.
 
 ---
 
+> ## **🚨 NOTE FOR JUDGES: Please use the badges above for direct links to our Live Interactive UI, the Mathematical Proofs blog, and the Colab Training Script! 🚨**
+
+---
+
 ## 1. The Problem: A Universal Testbed for Spatial-Temporal Flow
 Traffic management is one of the most complex stochastic challenges in the real world. A standard intersection does not just require an agent to "prevent crashes"; it requires forecasting dynamically shifting Origin-Destination (OD) probability matrices and handling cascading fluid dynamics.
 
