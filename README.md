@@ -35,6 +35,7 @@ short_description: Traffic Intersection control environment.
 
 <img src=".assets/simulation.gif" width="750" alt="Traffic UI Simulation Demonstration" style="border-radius: 8px; border: 1px solid #eaeaea;">
 <br>
+<br>
 <p><i>The Traffic Env OpenEnv UI, demonstrating stochastic phase shifts and real-time route execution.</i></p>
 <br>
 
