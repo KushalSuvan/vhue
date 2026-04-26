@@ -257,6 +257,58 @@ traffic_env/
 
 # Traffic Environment for OpenEnv
 
+> _You live in Bangalore and its traffic. Your demotivation is our motivation, jk, the necessity was my mom's idea :P._
+
+But on a serious note, I don't think any of us will need any motivation here.
+A year ago, I was appearing for my GATE exam. I took the bus. I did not anticipate the severe "time-dilation" we have in this pretty city for just a 10km ride.
+
+And every km I saw minutes pass by. I was sitting, exam already started, looking at my phone. The little guy going to school, more extroverted than I ever was, talked on and on about the stops to come by before I reach my stop. I looked out, cursing all those 
+
+The invigilators were chill enough to let in a guy 45-minutes late. But the time did cost my score.
+
+Resolution might take time, but we can create environments others can use to test their solutions. A physically accurate environment is even more important here as we cannot check physically.
+
+## The Environment
+
+> The environment aggressively focuses on tested and real-world models.
+
+The exact details of rigorous proofs and derivation of why this works are cited in a Github Pages, for research purposes. 
+
+We cite the papers employed here to give due credits. They are time-tested real-world models from Traffic Flow Theory that form basis of the environment.
+
+And for you- a light-humored summary.
+
+We needed a concrete model for traffic flowing on a road, without creating a heavy simulation of 10000+ entities.
+
+Daganzo (1994) presents the Cell Transmission Model- which divides the road into cells and emulates kinetic fluid density waves as traffic flows.
+
+Basically it took PhDs and decades of work to just say "we don't like driving on crowded roads".
+
+On serious note, this shows that the model exactly emulates real-world. Its main power is it being able to control the thing it models, not just what it shows as outcome.
+
+These modelled roads were then fed into intersections. 
+
+The agent is now free to tell which road to let through and which road to block.
+
+
+# Down below are ugly details. Be patient with it.
+
+## Global Route Probability Distributions
+
+We must account for vehicles having predefined routes.
+It has been concretely shown (SOURCE) that on a stochastic scale, the routes being taken on a map has a probability distribution that shifts over hours of day.
+
+At intersection level, this translates to shifting probabilities over turns taken.
+
+Think of it as phases of routes, at hour one we have more of left routes taken, at hour two we have more of right routes taken. It has been shown (SOURCE) little to no correlation between these phases. A way to feel this is that school opens at 7 AM - 8 AM. From 8 AM - 9 AM offices start. The locus of routes leading to schools and offices do not show much correlation and can be considered a multivariate white noise.
+
+Thus, we randomly choose the route probability distribution at some steps.
+
+## Microscopic Experiential Rewarding
+
+The environment involves priority vehicles. 
+
+
 ## Scenario Complexities
 This environment allows you to regulate differnt traffic circumstances.
 

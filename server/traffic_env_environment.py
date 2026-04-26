@@ -295,7 +295,6 @@ class TrafficEnvironment(Environment):
         )
         self._intersection.time_in_phase = self._intersection.min_green_time
 
-    # ── Reward ───────────────────────────────────────────────────────────────
 
     def _compute_reward(self, clearance_bonus: float = 0.0) -> float:
         if self._intersection is None:
