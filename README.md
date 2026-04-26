@@ -21,7 +21,7 @@ short_description: Devolving microscopic priority routing to mesoscopic cell evi
 <div align="center">
   
 # 🚦 Traffic Env: Devolving Microscopic Priority to Mesoscopic Cells
-**An OpenEnv Environment for Training LLMs in Spatiotemporal Traffic Flow Theory**
+**An OpenEnv Environment with Spatiotemporal Traffic Flow Emulation**
 
 [![Open UI](https://img.shields.io/badge/Launch-Traffic_Env_UI-indigo?style=for-the-badge&logo=huggingface)](https://etherealwhisper-traffic-env-ui.hf.space)
 [![Math Proofs](https://img.shields.io/badge/Read-Mathematical_Foundations-slate?style=for-the-badge&logo=github)](https://kushalsuvan.github.io/vhue)
