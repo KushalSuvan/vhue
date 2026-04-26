@@ -27,7 +27,7 @@ short_description: Devolving microscopic priority routing to mesoscopic cell evi
 [![Math Proofs](https://img.shields.io/badge/Read-Mathematical_Foundations-slate?style=for-the-badge&logo=github)](https://kushalsuvan.github.io/vhue)
 [![OpenEnv](https://img.shields.io/badge/Powered_by-OpenEnv-blue?style=for-the-badge)](#)
 
-*You live in Bangalore. A 10km bus ride should not cost you a GATE exam.*
+*You live in Bangalore with its traffic. You know the problem...*
 <br><br>
 
 </div>
