@@ -129,6 +129,34 @@
     
     <p>Thus, to accurately reflect this temporal decoupling in the environment, the model randomly assigns updated global route probability distributions at discrete simulation step intervals.</p>
 
+    <h2>4. Devolving Priority Routing to Cell Eviction</h2>
+    <p>A central challenge in abstracted traffic modelling is managing priority vehicle routing. Traditionally, tracking a specific entity requires a "skewering through" of the mesoscopic layers down to a microscopic (Lagrangian) framework, inherently increasing computational complexity. However, by formalizing the "orderly flow" hypothesis, we can elegantly devolve this microscopic problem back into the mesoscopic (Eulerian) domain.</p>
+
+    <p><strong>Theorem:</strong> Under a strict non-overtaking (FIFO) constraint, the microscopic routing of a priority vehicle $v_p$ is mathematically equivalent to the macroscopic eviction of a priority cell volume.</p>
+
+    <p><strong>Proof:</strong> Let a link segment contain an ordered set of vehicles $V = \{v_1, v_2, \dots, v_n\}$ indexed by their spatial position, such that $v_1$ is at the downstream boundary (the intersection). Let $v_p$ denote our priority vehicle, where $1 < p \le n$.</p>
+    
+    <p>We introduce the "orderly flow" assumption via a strict First-In-First-Out (FIFO) constraint. The exit time $t_{exit}$ for any vehicle must satisfy a monotonic non-decreasing property:</p>
+
+    <p>
+        $$ t_{exit}(v_1) < t_{exit}(v_2) < \dots < t_{exit}(v_n) $$
+    </p>
+
+    <p>Let the routing objective be to clear the priority vehicle through the intersection by a target time $t^*$. Therefore, we require $t_{exit}(v_p) \le t^*$. By recursive substitution of the FIFO constraint, this single microscopic condition necessitates a cascaded condition on all preceding vehicles:</p>
+
+    <p>
+        $$ t_{exit}(v_i) \le t^* \quad \forall i \in \{1, 2, \dots, p\} $$
+    </p>
+
+    <p>We now transition to the mesoscopic Cell Transmission Model framework. Let the segment containing $V$ be denoted as cell $C_i$ with an occupancy $N \ge p$. To satisfy the condition that $v_p$ exits by $t^*$, the cumulative outflow $Y$ from cell $C_i$ over the interval must satisfy:</p>
+
+    <p>
+        $$ Y(t^*) = \int_{0}^{t^*} y_{out}(\tau) d\tau \ge p $$
+    </p>
+
+    <p><em>Q.E.D.</em> The problem of extracting a discrete priority vehicle $v_p$ no longer requires Lagrangian particle tracking. It devolves entirely into a mesoscopic demand function: the intersection must simply evict a contiguous volume of flow equal to $p$ from the boundary cell.</p>
+    
+            
     <hr>
 
     <div class="references">
