@@ -110,13 +110,14 @@ def jains_fairness(queues: List[float]) -> float:
     return (sum(queues) ** 2) / (n * sum(q ** 2 for q in queues) + 1e-9)
 
 
-def make_road(road_id: str) -> Road:
+def make_road(road_id: str, end: bool = False) -> Road:
     return Road(
         id=Road.RoadId(road_id),
         cells=[
             Cell(jam_cap=10.0, flow_cap=3.0, free_flow=1.0, shock_speed=0.5)
             for _ in range(8)
-        ]
+        ],
+        end = end
     )
 
 
@@ -252,7 +253,7 @@ class TrafficEnvironment(Environment):
 
     def _build_intersection(self):
         in_roads  = [make_road(id) for id in ('north_in','south_in','east_in','west_in')]
-        out_roads = [make_road(id) for id in ('north_out','south_out','east_out','west_out')]
+        out_roads = [make_road(id, end=True) for id in ('north_out','south_out','east_out','west_out')]
 
         self._all_roads = {r.id: r for r in in_roads + out_roads}
 

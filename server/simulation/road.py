@@ -65,8 +65,6 @@ class PhantomSink(Cell):
     free_flow: float = field(default=1.0, init=False)
     shock_speed: float = field(default=1.0, init=False)
 
-    curr = float('inf')
-
     def update(self, inflow: float, outflow: float):
         pass
 
@@ -79,6 +77,7 @@ class Road:
     cells: List[Cell]
     source: Cell = field(default_factory=PhantomSource)
     sink: Cell   = field(default_factory=PhantomSink)
+    end: bool = field(default=False)
  
     def set_source(self, cell: Optional[Cell] = None):
         self.source = cell if cell is not None else PhantomSource()
@@ -97,10 +96,10 @@ class Road:
         for i in range(n):
             inflow  = inflows[i]
             outflow = inflows[i+1] if i+1 < n else 0.0
-            if i == n-2:
-                all_cells[i].curr -= outflow
-                
+
             all_cells[i].update(inflow, outflow)
+            if self.end and i == n-2:
+                all_cells[i].curr = inflow
  
     def stop_line_demand(self) -> float:
         return self.cells[-1].demand()
