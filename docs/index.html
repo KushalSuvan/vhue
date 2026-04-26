@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research Notes | Micro to Meso Modeling</title>
+    <title>Mathematical Foundations | Micro to Meso Modeling</title>
     
     <script>
     MathJax = {
@@ -17,26 +17,24 @@
 
     <style>
         :root {
-            --bg-color: #fcfcfc;      /* Soft off-white to reduce eye strain */
-            --text-main: #2b2b2b;     /* Deep charcoal, softer than pure black */
+            --bg-color: #fcfcfc;
+            --text-main: #2b2b2b;
             --text-muted: #737373;
-            --accent: #374151;        /* Calm slate gray */
+            --accent: #374151;
             --divider: #eaeaea;
         }
 
         body {
-            /* Georgia is highly legible for long-form academic reading */
             font-family: "Georgia", "Times New Roman", serif; 
             line-height: 1.8;
             color: var(--text-main);
             background-color: var(--bg-color);
-            max-width: 760px;         /* Optimal line length for reading */
+            max-width: 760px;
             margin: 0 auto;
             padding: 5rem 2rem;
         }
 
         h1, h2, h3 {
-            /* Sans-serif headers provide a clean, modern contrast */
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             font-weight: 400;
             color: var(--accent);
@@ -75,19 +73,33 @@
             font-size: 0.95rem;
         }
 
-        /* Beautiful styling for inline and block math */
         .mjx-chtml {
             font-size: 105% !important; 
+        }
+
+        /* Academic hanging indent for references */
+        .references p {
+            padding-left: 2em;
+            text-indent: -2em;
+            margin-bottom: 1em;
+            font-size: 0.9rem;
+            color: #444;
+        }
+        
+        hr {
+            border: 0;
+            border-top: 1px solid var(--divider);
+            margin: 4rem 0 2rem 0;
         }
     </style>
 </head>
 <body>
 
     <h1>Devolving Microscopic Priority to Mesoscopic Cells</h1>
-    <p class="meta">Research Draft &mdash; Mathematical Foundations</p>
+    <p class="meta">Notes on Traffic Flow Theory &mdash; Mathematical Foundations</p>
 
     <div class="abstract">
-        <p><strong>Abstract:</strong> This document establishes the rigorous proofs required to bridge microscopic priority vehicle dynamics to a mesoscopic priority cell structure. By enforcing a strict "no overtake" assumption, we align individual vehicle trajectories with the macroscopic flow conserved by the Lighthill-Whitham-Richards (LWR) model and discretized via Daganzo's Cell Transmission Model.</p>
+        <p><strong>Abstract:</strong> This text establishes the rigorous proofs required to bridge microscopic priority vehicle dynamics to a mesoscopic priority cell structure. By enforcing a strict "no overtake" assumption, we align individual vehicle trajectories with the macroscopic flow conserved by the Lighthill-Whitham-Richards (LWR) model and discretized via Daganzo's Cell Transmission Model.</p>
     </div>
 
     <h2>1. The Conservation Law</h2>
@@ -106,7 +118,32 @@
         $$ n_i^{k+1} = n_i^k + y_{i-1}^k - y_i^k $$
     </p>
 
-    <p>Where $y_i^k$ is the flow across the boundary between cell $i$ and $i+1$, determined by the sending and receiving functions governed by the "no overtake" bounded acceleration...</p>
+    <p>Where $y_i^k$ is the flow across the boundary between cell $i$ and $i+1$. By enforcing a strict First-In-First-Out (FIFO) constraint—the mathematical equivalent of a "no overtake" rule—we prevent pathological vehicle jumping and maintain the conservation bounded by maximum flow and jam density limits.</p>
+
+    <h2>3. Global Route Probability Distributions</h2>
+    <p>To operate effectively, the environment must account for vehicles traversing predefined networks. It is a well-established property of Dynamic Origin-Destination (OD) estimation that, on a stochastic scale, network routing probabilities shift structurally over the hours of the day based on demand elasticity.</p>
+    
+    <p>At the intersection level, this macroscopic phenomenon translates directly to shifting probabilities over turn directions. We can conceptualize this as temporal phases of routing: at hour one, we observe a higher probability of left-turn routes; at hour two, the distribution shifts heavily toward right-turn routes.</p>
+    
+    <p>Crucially, temporal correlation analyses of traffic links demonstrate that there is little to no statistical correlation between these distinct phases. A practical mechanism driving this decoupling is the independence of trip purposes. For instance, school transit heavily populates the 07:00–08:00 window, whereas commercial office transit dominates the 08:00–09:00 window. Because the spatial loci of these two destinations are fundamentally separate, the transition between them lacks strong temporal correlation and can be modeled as a multivariate white noise process.</p>
+    
+    <p>Thus, to accurately reflect this temporal decoupling in the environment, the model randomly assigns updated global route probability distributions at discrete simulation step intervals.</p>
+
+    <hr>
+
+    <div class="references">
+        <h3>References</h3>
+        
+        <p>Lighthill, M. J., & Whitham, G. B. (1955). On kinematic waves. II. A theory of traffic flow on long crowded roads. <em>Proceedings of the Royal Society of London. Series A. Mathematical and Physical Sciences</em>, 229(1178), 317-345.</p>
+        
+        <p>Richards, P. I. (1956). Shock waves on the highway. <em>Operations Research</em>, 4(1), 42-51.</p>
+        
+        <p>Daganzo, C. F. (1994). The cell transmission model: A dynamic representation of highway traffic consistent with the hydrodynamic theory. <em>Transportation Research Part B: Methodological</em>, 28(4), 269-287.</p>
+        
+        <p>Daganzo, C. F. (1995). The cell transmission model, part II: network traffic. <em>Transportation Research Part B: Methodological</em>, 29(2), 79-93.</p>
+
+        <p>Cascetta, E. (2001). <em>Transportation Systems Analysis: Models and Applications</em>. Springer Optimization and Its Applications. (Foundational text on Dynamic OD estimation and stochastic route choice).</p>
+    </div>
 
 </body>
 </html>
