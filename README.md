@@ -26,7 +26,7 @@ short_description: Devolving microscopic priority routing to mesoscopic cell evi
 [![Math Proofs](https://img.shields.io/badge/Read-Mathematical_Foundations-slate?style=for-the-badge&logo=github)](https://kushalsuvan.github.io/vhue)
 [![Kaggle Training](https://img.shields.io/badge/Run-Kaggle_Training_Script-20BEFF?style=for-the-badge&logo=kaggle&logoColor=white)](https://www.kaggle.com/code/trinetri/trafficllmorchestration)
 
-> **🚨 NOTE FOR JUDGES: Please use the badges above for direct links to our Live Interactive UI, the Mathematical Proofs blog, and the Colab Training Script! 🚨**
+> ## **🚨 NOTE FOR JUDGES: Please use the badges above for direct links to our Live Interactive UI, the Mathematical Proofs blog, and the Colab Training Script! 🚨**
 
 
 *You live in Bangalore with its traffic. You know the problem...*
