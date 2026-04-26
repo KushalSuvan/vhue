@@ -21,13 +21,6 @@ short_description: Devolving microscopic priority routing to mesoscopic cell evi
 # 🚦 Traffic Env: Devolving Microscopic Priority to Mesoscopic Cells
 **An OpenEnv Environment with Spatiotemporal Traffic Flow Emulation**
 
-[![Open UI](https://img.shields.io/badge/Launch-Traffic_Env_UI-indigo?style=for-the-badge&logo=huggingface)](https://etherealwhisper-traffic-env-ui.hf.space)
-[![Math Proofs](https://img.shields.io/badge/Read-Mathematical_Foundations-slate?style=for-the-badge&logo=github)](https://kushalsuvan.github.io/vhue)
-[![Colab Training](https://img.shields.io/badge/Run-Colab_Training_Script-orange?style=for-the-badge&logo=googlecolab)](#)
-
-> **🚨 NOTE FOR JUDGES: Please use the badges above for direct links to our Live Interactive UI, the Mathematical Proofs blog, and the Colab Training Script! 🚨**
-
-*You live in Bangalore with its traffic. You know the problem...*
 <br><br>
 
 <img src="./.assets/simulation.gif" width="750" alt="Traffic UI Simulation" style="border-radius: 8px;">
@@ -35,6 +28,14 @@ short_description: Devolving microscopic priority routing to mesoscopic cell evi
 <br>
 
 </div>
+
+[![Open UI](https://img.shields.io/badge/Launch-Traffic_Env_UI-indigo?style=for-the-badge&logo=huggingface)](https://etherealwhisper-traffic-env-ui.hf.space)
+[![Math Proofs](https://img.shields.io/badge/Read-Mathematical_Foundations-slate?style=for-the-badge&logo=github)](https://kushalsuvan.github.io/vhue)
+[![Colab Training](https://img.shields.io/badge/Run-Colab_Training_Script-orange?style=for-the-badge&logo=googlecolab)](#)
+
+> **🚨 NOTE FOR JUDGES: Please use the badges above for direct links to our Live Interactive UI, the Mathematical Proofs blog, and the Colab Training Script! 🚨**
+
+*You live in Bangalore with its traffic. You know the problem...*
 
 ---
 
