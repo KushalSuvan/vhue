@@ -14,6 +14,107 @@
     };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script defer>
+        document.addEventListener('DOMContentLoaded', () => {
+            const lane = document.getElementById('sim-lane');
+            const valN = document.getElementById('val-n');
+            const valP = document.getElementById('val-p');
+            
+            let queue = [];
+            let totalVehicles = 8;
+            let priorityIndex = 5; // The 6th vehicle in the array (0-indexed)
+            let isRunning = false;
+
+            // Spacing constants
+            const CAR_WIDTH = 35;
+            const CAR_GAP = 10;
+            const START_X_OFFSET = 60; // Distance from the intersection line
+
+            function initializeQueue() {
+                lane.innerHTML = '<div class="intersection-line"></div><div class="intersection-label">Exit Boundary</div>';
+                queue = [];
+                
+                for (let i = 0; i < totalVehicles; i++) {
+                    const car = document.createElement('div');
+                    car.className = `vehicle ${i === priorityIndex ? 'priority' : 'standard'}`;
+                    
+                    // Add an identifier for academic clarity
+                    car.innerText = i === priorityIndex ? 'vp' : `v${totalVehicles - i}`;
+                    
+                    lane.appendChild(car);
+                    queue.push(car);
+                }
+                
+                updatePositions();
+                updateMetrics();
+            }
+
+            function updatePositions() {
+                // The front of the queue is index 0. It should be closest to the right.
+                queue.forEach((car, index) => {
+                    // Right aligned math: lane width - intersection offset - (index * spacing)
+                    const rightPos = START_X_OFFSET + (index * (CAR_WIDTH + CAR_GAP));
+                    car.style.right = `${rightPos}px`;
+                });
+            }
+
+            function updateMetrics() {
+                valN.innerText = queue.length;
+                
+                // Find the priority vehicle to calculate p
+                const pIdx = queue.findIndex(car => car.classList.contains('priority'));
+                if (pIdx !== -1) {
+                    valP.innerText = pIdx + 1; // +1 because volume includes the vehicle itself
+                } else {
+                    valP.innerText = "0";
+                }
+            }
+
+            async function runSimulationLoop() {
+                if (isRunning) return;
+                isRunning = true;
+
+                while (true) {
+                    initializeQueue();
+                    
+                    // Wait for user to read the initial state
+                    await new Promise(r => setTimeout(r, 2000));
+
+                    // Evict vehicles until the priority vehicle is cleared
+                    while (queue.length > 0) {
+                        const targetP = parseInt(valP.innerText);
+                        if (targetP === 0 && queue.length < totalVehicles) {
+                            // Priority is gone, pause briefly, then reset to show loop
+                            break; 
+                        }
+
+                        // Pop the front vehicle
+                        const frontCar = queue.shift();
+                        
+                        // Apply eviction animation
+                        frontCar.classList.add('evicting');
+                        
+                        // Wait for animation, then remove from DOM
+                        setTimeout(() => {
+                            if(frontCar.parentNode) frontCar.parentNode.removeChild(frontCar);
+                        }, 500);
+
+                        updatePositions();
+                        updateMetrics();
+
+                        // Processing delay for the intersection
+                        await new Promise(r => setTimeout(r, 800));
+                    }
+                    
+                    // Pause before restarting the loop
+                    await new Promise(r => setTimeout(r, 2000));
+                }
+            }
+
+            // Start the loop automatically
+            runSimulationLoop();
+        });
+    </script>
 
     <style>
         :root {
@@ -91,6 +192,115 @@
             border-top: 1px solid var(--divider);
             margin: 4rem 0 2rem 0;
         }
+
+        .sim-container {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: #ffffff;
+            border: 1px solid var(--divider);
+            border-radius: 4px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        .sim-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed var(--divider);
+        }
+
+        .sim-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .sim-metrics {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        .metric-value {
+            font-weight: bold;
+            font-size: 1.1rem;
+            font-family: monospace;
+            color: var(--accent);
+        }
+
+        .lane {
+            position: relative;
+            height: 60px;
+            background: #f8f9fa;
+            border-top: 2px solid var(--divider);
+            border-bottom: 2px solid var(--divider);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .intersection-line {
+            position: absolute;
+            right: 40px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: #ef4444; /* Soft red for stopline */
+            z-index: 10;
+        }
+
+        .intersection-label {
+            position: absolute;
+            right: 48px;
+            top: 5px;
+            font-size: 0.7rem;
+            color: #ef4444;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .vehicle {
+            position: absolute;
+            width: 35px;
+            height: 20px;
+            border-radius: 3px;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .vehicle.standard {
+            background-color: #64748b; /* Slate gray */
+        }
+
+        .vehicle.priority {
+            background-color: #f59e0b; /* Amber/Gold */
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+            z-index: 5;
+        }
+
+        .evicting {
+            transform: translateX(100px) scale(0.8) !important;
+            opacity: 0;
+        }
+        
+        .sim-caption {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-align: center;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -156,7 +366,26 @@
 
     <p><em>Q.E.D.</em> The problem of extracting a discrete priority vehicle $v_p$ no longer requires Lagrangian particle tracking. It devolves entirely into a mesoscopic demand function: the intersection must simply evict a contiguous volume of flow equal to $p$ from the boundary cell.</p>
     
-            
+    <div class="sim-container">
+        <div class="sim-header">
+            <div class="sim-title">Figure 1: Mesoscopic Eviction Loop</div>
+            <div class="sim-metrics">
+                <div>Cell Occupancy ($N$): <span id="val-n" class="metric-value">0</span></div>
+                <div>Eviction Volume ($p$): <span id="val-p" class="metric-value">0</span></div>
+            </div>
+        </div>
+        
+        <div class="lane" id="sim-lane">
+            <div class="intersection-line"></div>
+            <div class="intersection-label">Exit Boundary</div>
+            </div>
+        
+        <div class="sim-caption">
+            Observe the strict FIFO constraint: the target volume $p$ must reach 0 before the priority entity clears the boundary.
+        </div>
+    </div>
+
+    
     <hr>
 
     <div class="references">
