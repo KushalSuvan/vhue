@@ -1,6 +1,3 @@
-Here is the complete, corrected file. You can copy this entire block and paste it directly into your `README.md` file on Hugging Face.
-
-```markdown
 ---
 title: VHUE - Vehicles under Echelonment
 emoji: 🚦
@@ -822,4 +819,3 @@ MIT License - do whatever you want with this, just don't blame me if your city's
 Made with 🚦 (and a lot of waiting in traffic) by EtherealWhisper
 
 </div>
-```
