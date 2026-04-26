@@ -1,5 +1,5 @@
 spec_version: 1
-name: the_router
+name: vhue
 type: space
 runtime: fastapi
 app: server.app:app
