@@ -97,6 +97,9 @@ class Road:
         for i in range(n):
             inflow  = inflows[i]
             outflow = inflows[i+1] if i+1 < n else 0.0
+            if i == n-2:
+                all_cells[i].curr -= outflow
+                
             all_cells[i].update(inflow, outflow)
  
     def stop_line_demand(self) -> float:
