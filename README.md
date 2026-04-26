@@ -30,7 +30,7 @@ short_description: Devolving microscopic priority routing to mesoscopic cell evi
 *You live in Bangalore with its traffic. You know the problem...*
 <br><br>
 
-<img src="./assets/simulation.gif" width="750" alt="Traffic UI Simulation" style="border-radius: 8px;">
+<img src="./.assets/simulation.gif" width="750" alt="Traffic UI Simulation" style="border-radius: 8px;">
 <p><i>The Traffic Env OpenEnv UI, demonstrating stochastic phase shifts and real-time route execution.</i></p>
 <br>
 
@@ -53,7 +53,7 @@ This environment provides researchers with a mathematically accurate, lightweigh
 Because this environment is agent-agnostic, the underlying simulation must be flawless. This is a rigorously backed physics environment built on the **Lighthill-Whitham-Richards (LWR)** conservation law and computationally discretized using **Daganzo’s Cell Transmission Model (1994)**.
 
 <div align="center">
-  <img src="./assets/eviction.gif" width="600" alt="Mesoscopic Eviction Loop Animation" style="border: 1px solid #eaeaea; border-radius: 8px;">
+  <img src="./.assets/eviction.gif" width="600" alt="Mesoscopic Eviction Loop Animation" style="border: 1px solid #eaeaea; border-radius: 8px;">
   <p><i>Figure 1: The mathematical "no-overtake" constraint forcing the intersection to process priority vehicle routing as a bulk cell-eviction task.</i></p>
 </div>
 
