@@ -37,6 +37,8 @@ short_description: Traffic Intersection control environment.
 <p><i>The Traffic Env OpenEnv UI, demonstrating stochastic phase shifts and real-time route execution.</i></p>
 <br>
 
+</div>
+
 ---
 
 ## 1. The Problem: A Universal Testbed for Spatial-Temporal Flow
