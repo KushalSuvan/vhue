@@ -80,11 +80,6 @@ We use OpenEnv's composable rubrics to provide a rich, multi-dimensional reward 
 
 We tackled the environment using **Unsloth** alongside **Group Relative Policy Optimization (GRPO)** to maximize the training efficiency of the LLM agent. 
 
-<div align="center">
-  <img src="./assets/training_plot.png" width="600" alt="Training Curve Placeholder" style="border-radius: 8px; border: 1px solid #eaeaea;">
-  <p><i>Figure 2: Reward accumulation over 10k steps. The trained agent demonstrated a sharp learning curve in recognizing OD shifts, mapping priority vehicle tags to bulk cell-eviction actions.</i></p>
-</div>
-
 **Key Results:**
 * **Untrained Baseline:** Averaged high collision rates and total gridlock within 50 steps due to route starvation.
 * **Trained Agent:** Successfully learned to map priority tags to bulk cell-eviction actions without violating the safety matrices.
