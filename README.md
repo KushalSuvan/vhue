@@ -24,7 +24,7 @@ short_description: Devolving microscopic priority routing to mesoscopic cell evi
 
 [![Open UI](https://img.shields.io/badge/Launch-Traffic_Env_UI-indigo?style=for-the-badge&logo=huggingface)](https://etherealwhisper-traffic-env-ui.hf.space)
 [![Math Proofs](https://img.shields.io/badge/Read-Mathematical_Foundations-slate?style=for-the-badge&logo=github)](https://kushalsuvan.github.io/vhue)
-[![Kaggle Training](https://img.shields.io/badge/Run-Kaggle_Training_Script-20BEFF?style=for-the-badge&logo=kaggle&logoColor=white)](https://www.kaggle.com/code/trinetri/trafficllmorchestration)
+[![Colab Training](https://img.shields.io/badge/Run-Colab_Training_Script-orange?style=for-the-badge&logo=googlecolab)](https://colab.research.google.com/drive/1TMq_qdFoHaiauP6KtKoWYse9n33RYw3x?usp=sharing)
 
 > ## **🚨 NOTE FOR JUDGES: Please use the badges above for direct links to our Live Interactive UI, the Mathematical Proofs blog, and the Colab Training Script! 🚨**
 
